@@ -3,6 +3,15 @@
 </script>
 
 <style>
+	.nav-container {
+		border-bottom: 1px solid #eee;
+		height: 60px;
+	}
+
+	img {
+		float: left;
+	}
+
 	nav {
 		border-bottom: 1px solid rgba(255,62,0,0.1);
 		font-weight: 300;
@@ -12,6 +21,7 @@
 	ul {
 		margin: 0;
 		padding: 0;
+		float: right;
 	}
 
 	/* clearfix */
@@ -48,13 +58,13 @@
 	}
 </style>
 
-<nav>
-	<ul>
-		<li><a class='{segment === undefined ? "selected" : ""}' href='.'>home</a></li>
-		<li><a class='{segment === "about" ? "selected" : ""}' href='about'>about</a></li>
-
-		<!-- for the blog link, we're using rel=prefetch so that Sapper prefetches
-		     the blog data when we hover over the link or tap it on a touchscreen -->
-		<li><a rel=prefetch class='{segment === "blog" ? "selected" : ""}' href='blog'>blog</a></li>
-	</ul>
-</nav>
+<div class="nav-container">
+	<img src="https://picsum.photos/60?random=3" alt="" />
+	<nav>
+		<ul>
+			<li><a class='{segment === undefined ? "selected" : ""}' href='become-a-host'>Become a host</a></li>
+			<li><a class='{segment === "register" ? "selected" : ""}' href='register'>Sign up</a></li>
+			<li><a class='{segment === "login" ? "selected" : ""}' href='login'>Log in</a></li>
+		</ul>
+	</nav>
+</div>
