@@ -29,7 +29,7 @@ code {
 	border-radius: 2px;
 }
 
-button {
+button.styled {
 	background-color: rgb(255, 90, 95);
 	color: white;
 	font-size: 13px;
