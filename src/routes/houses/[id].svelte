@@ -11,6 +11,7 @@
 </script>
 
 <script>
+  import {showModal, showLoginModal} from '../../store.js'
   import DateRangePicker from './_DateRangePicker.svelte'
 
   export let house
@@ -70,7 +71,7 @@
 
     <p>{@html house.description}</p>
 
-    <a href="#">Contact host</a>
+    <a href="javascript:;">Contact host</a>
 
     <hr>
 
@@ -111,7 +112,14 @@
       <p>${house.price}</p>
 
       <p><strong>Total</strong> ${house.price * numberOfNightsBetweenDates}</p>
-      <button class="reserve">Reserve</button>
-    {/if}
+      <button class="reserve"
+        on:click={() => {
+          showModal.set(true)
+          showLoginModal.set(true)
+        }}
+      >
+        Reserve
+      </button>
+   {/if}
   </aside>
 </div>
