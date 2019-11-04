@@ -1,17 +1,28 @@
 <script>
   import {createEventDispatcher} from 'svelte'
   import axios from 'axios'
+  import {stores} from '@sapper/app'
   const dispatch = createEventDispatcher()
+  const {session} = stores()
 
   let email = ''
   let password = ''
   let passwordconfirmation = ''
 
   const submit = async () => {
-    const response = await axios.post('auth/register', {
-      email, password, passwordconfirmation
-    })
-    console.log(response)
+    try {
+      const response = await axios.post('auth/register', {
+        email, password, passwordconfirmation
+      })
+      if (response.data.status === 'error') {
+        axios(response.data.message)
+      }
+      session.set({user: email})
+      dispatch('closeModal')
+    } catch (error) {
+      alert(error.response.data.message)
+      return
+    }
   }
 </script>
 

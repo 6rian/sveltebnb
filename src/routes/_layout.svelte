@@ -33,6 +33,10 @@
 					showLoginModal.set(false)
 					showRegistrationModal.set(true)
 				}}
+				on:closeModal={() => {
+					showLoginModal.set(false)
+					showModal.set(false)
+				}}
 			></LoginModal>
 		{/if}
 		{#if $showRegistrationModal}
@@ -40,6 +44,10 @@
 				on:showLogin={() => {
 					showRegistrationModal.set(false)
 					showLoginModal.set(true)
+				}}
+				on:closeModal={() => {
+					showRegistrationModal.set(false)
+					showModal.set(false)
 				}}
 			>
 			</RegistrationModal>
