@@ -6,7 +6,10 @@ import compression from 'compression'
 import * as sapper from '@sapper/server'
 import passport from 'passport'
 import { Strategy as LocalStrategy } from 'passport-local'
-import { User, sequelize } from './model.js'
+import { sequelize } from './database.js'
+import User from './models/user.js'
+import House from './models/house.js'
+import Review from './models/review.js'
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 
 const { PORT, NODE_ENV } = process.env
@@ -18,6 +21,9 @@ const sessionStore = new SequelizeStore({
 
 // Run once to create sessions table in db:
 //sessionStore.sync()
+User.sync({ alter: true })
+House.sync({ alter: true })
+Review.sync({ alter: true })
 
 passport.use(
   new LocalStrategy(

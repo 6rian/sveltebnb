@@ -1,12 +1,6 @@
+import { Model, DataTypes } from 'sequelize'
 import bcrypt from 'bcrypt'
-import { Sequelize, Model, DataTypes } from 'sequelize'
-import { user, password, host, database } from './database.js'
-
-export const sequelize = new Sequelize(database, user, password, {
-  host,
-  dialect: 'postgres',
-  logging: false
-})
+import { sequelize } from '../database.js'
 
 export class User extends Model {}
 
@@ -38,3 +32,5 @@ User.init(
 User.prototype.isPasswordValid = async function(password) {
   return await bcrypt.compare(password, this.password)
 }
+
+export default User
