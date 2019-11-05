@@ -27,8 +27,8 @@
 <h2>Log in</h2>
 <div>
   <form on:submit|preventDefault={submit}>
-    <input id="email" type="email" placeholder="Email address" />
-    <input id="password" type="password" placeholder="Password" />
+    <input bind:value={email} id="email" type="email" placeholder="Email address" />
+    <input bind:value={password} id="password" type="password" placeholder="Password" />
     <button class="styled">Log in</button>
     <p>Don't have an account yet? <a href="javascript:;" on:click={() => dispatch('showSignup')}>Sign up</a></p>
   </form>
