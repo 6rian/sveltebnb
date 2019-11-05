@@ -10,7 +10,7 @@ export const post = async (req, res) => {
   }
 
   try {
-    const user = await User.create({ email, password })
+    const user = await User.create({ email: email.toLowerCase(), password })
     req.login(user, err => {
       if (err) {
         res.statusCode = 500
