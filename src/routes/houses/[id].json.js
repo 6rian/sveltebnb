@@ -1,17 +1,24 @@
-import houses from './_houses.js'
-
-const lookup = new Map()
-houses.forEach(house => {
-  lookup.set(house.id, JSON.stringify(house))
-})
+import House from '../../models/house.js'
+import Review from '../../models/review.js'
 
 export function get(req, res, next) {
   const { id } = req.params
-  if (lookup.has(id)) {
-    res.writeHead(200, { 'Content-Type': 'application/json' })
-    res.end(lookup.get(id))
-  } else {
-    res.writeHead(404, { 'Content-Type': 'application/json' })
-    res.end(JSON.stringify({ message: `Not found` }))
-  }
+
+  House.findByPk(id).then(house => {
+    if (house) {
+      Review.findAndCountAll({
+        where: {
+          houseId: house.id
+        }
+      }).then(reviews => {
+        house.dataValues.reviews = reviews.rows.map(review => review.dataValues)
+        house.dataValues.reviewsCount = reviews.count
+        res.writeHead(200, { 'Content-Type': 'application/json' })
+        res.end(JSON.stringify(house.dataValues))
+      })
+    } else {
+      res.writeHead(404, { 'Content-Type': 'application/json' })
+      res.end(JSON.stringify({ message: `Not found` }))
+    }
+  })
 }

@@ -75,25 +75,29 @@
 
     <hr>
 
-    <h3>Amenities</h3>
+    {#if (house.wifi || house.kitchen || house.heating || house.freeParking)}
+      <h3>Amenities</h3>
+      <ul>
+        {#if house.wifi}<li>Wifi</li>{/if}
+        {#if house.kitchen}<li>Kitchen</li>{/if}
+        {#if house.heating}<li>Heating</li>{/if}
+        {#if house.freeParking}<li>Free Parking</li>{/if}
+      </ul>
+    {/if}
 
-    {#each house.amenities as amenity}
-      {amenity}
-    {/each}
 
     {#if house.entirePlace === true}
       <p><strong>Entire place</strong></p>
       <p>You’ll have the space to yourself and will only share it with those you’re traveling with.</p>
     {/if}
 
-    <h3>198 Reviews</h3>
-
-    {#each house.reviews as review}
-      <img src={review.avatar} alt="" />
-      <p><strong>{review.user}</strong></p>
-      <p>{review.date}</p>
-      <p>{review.comment}</p>
-    {/each}
+    {#if house.reviewsCount}
+      <h3>{house.reviewsCount} Reviews</h3>
+      {#each house.reviews as review}
+        <p>{new Date(review.createdAt).toDateString()}</p>
+        <p>{review.comment}</p>
+      {/each}
+    {/if}
   </main>
 
   <aside>
