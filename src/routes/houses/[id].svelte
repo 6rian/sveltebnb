@@ -11,8 +11,12 @@
 </script>
 
 <script>
+  import axios from 'axios'
   import {showModal, showLoginModal} from '../../store.js'
+  import {stores} from '@sapper/app'
   import DateRangePicker from './_DateRangePicker.svelte'
+
+  const {session} = stores()
 
   export let house
 
@@ -32,6 +36,21 @@
     }
 
     return dayCount
+  }
+
+  const reserve = async () => {
+    try {
+      const houseId = house.id
+      const response = await axios.post('houses/reserve', {houseId, startDate, endDate})
+      if (response.data.status === 'error') {
+        alert(response.data.message)
+        return
+      }
+      console.log(response.data)
+    } catch (error) {
+      console.log(error)
+      return
+    }
   }
 </script>
 
@@ -116,14 +135,16 @@
       <p>${house.price}</p>
 
       <p><strong>Total</strong> ${house.price * numberOfNightsBetweenDates}</p>
-      <button class="reserve"
-        on:click={() => {
+      {#if $session.user}
+      <button class="reserve styled" on:click={reserve}>
+        Reserve now
+      </button>
+      {:else}
+        <button class="reserve styled" on:click={() => {
           showModal.set(true)
           showLoginModal.set(true)
-        }}
-      >
-        Reserve
-      </button>
+        }}>Log in to Reserve</button>
+      {/if}
    {/if}
   </aside>
 </div>

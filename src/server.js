@@ -7,6 +7,7 @@ import * as sapper from '@sapper/server'
 import passport from 'passport'
 import { Strategy as LocalStrategy } from 'passport-local'
 import { sequelize } from './database.js'
+import Booking from './models/booking.js'
 import User from './models/user.js'
 import House from './models/house.js'
 import Review from './models/review.js'
@@ -21,6 +22,7 @@ const sessionStore = new SequelizeStore({
 
 // Run once to create sessions table in db:
 //sessionStore.sync()
+Booking.sync({ alter: true })
 User.sync({ alter: true })
 House.sync({ alter: true })
 Review.sync({ alter: true })
